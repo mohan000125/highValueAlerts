@@ -31,7 +31,7 @@ public class SmsaRecepientTemp implements Serializable{
     private String smsaSenderBic;
 
     @Column(name = "SMSA_MSG_TYPE")
-    private Integer smsaMsgType;
+    private Long smsaMsgType;
 
     @Column(name = "SMSA_EMP_NAME", length = 150)
     private String smsaEmpName;
@@ -91,11 +91,11 @@ public class SmsaRecepientTemp implements Serializable{
         this.smsaSenderBic = smsaSenderBic;
     }
 
-    public Integer getSmsaMsgType() {
+    public Long getSmsaMsgType() {
         return smsaMsgType;
     }
 
-    public void setSmsaMsgType(Integer smsaMsgType) {
+    public void setSmsaMsgType(Long smsaMsgType) {
         this.smsaMsgType = smsaMsgType;
     }
 
