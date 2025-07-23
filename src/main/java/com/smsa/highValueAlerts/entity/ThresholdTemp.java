@@ -1,7 +1,7 @@
 package com.smsa.highValueAlerts.entity;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -46,19 +46,19 @@ public class ThresholdTemp {
     private String createdBy;
 
     @Column(name = "SMSA_CREATED_DATE")
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
 
     @Column(name = "SMSA_MODIFIED_BY", length = 10)
     private String modifiedBy;
 
     @Column(name = "SMSA_MODIFIED_DATE")
-    private LocalDateTime modifiedDate;
+    private LocalDate modifiedDate;
 
     @Column(name = "SMSA_VERIFIED_BY", length = 10)
     private String verifiedBy;
 
     @Column(name = "SMSA_VERIFIED_DATE")
-    private LocalDateTime verifiedDate;
+    private LocalDate verifiedDate;
 
     @Column(name = "SMSA_ACTION", length = 10)
     private String action;
@@ -137,11 +137,11 @@ public class ThresholdTemp {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -153,11 +153,11 @@ public class ThresholdTemp {
         this.modifiedBy = modifiedBy;
     }
 
-    public LocalDateTime getModifiedDate() {
+    public LocalDate getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(LocalDateTime modifiedDate) {
+    public void setModifiedDate(LocalDate modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
@@ -169,11 +169,11 @@ public class ThresholdTemp {
         this.verifiedBy = verifiedBy;
     }
 
-    public LocalDateTime getVerifiedDate() {
+    public LocalDate getVerifiedDate() {
         return verifiedDate;
     }
 
-    public void setVerifiedDate(LocalDateTime verifiedDate) {
+    public void setVerifiedDate(LocalDate verifiedDate) {
         this.verifiedDate = verifiedDate;
     }
 

@@ -1,6 +1,6 @@
 package com.smsa.highValueAlerts.DTO;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class RecepientDTO {
 
@@ -22,11 +22,11 @@ public class RecepientDTO {
 
     private String smsaModifiedBy;
 
-    private LocalDateTime smsaModifiedDate;
+    private LocalDate smsaModifiedDate;
 
     private String smsaVerifiedBy;
 
-    private LocalDateTime smsaVerifiedDate;
+    private LocalDate smsaVerifiedDate;
 
     private String smsaAction;
 
@@ -104,11 +104,11 @@ public class RecepientDTO {
         this.smsaModifiedBy = smsaModifiedBy;
     }
 
-    public LocalDateTime getSmsaModifiedDate() {
+    public LocalDate getSmsaModifiedDate() {
         return smsaModifiedDate;
     }
 
-    public void setSmsaModifiedDate(LocalDateTime smsaModifiedDate) {
+    public void setSmsaModifiedDate(LocalDate smsaModifiedDate) {
         this.smsaModifiedDate = smsaModifiedDate;
     }
 
@@ -120,11 +120,11 @@ public class RecepientDTO {
         this.smsaVerifiedBy = smsaVerifiedBy;
     }
 
-    public LocalDateTime getSmsaVerifiedDate() {
+    public LocalDate getSmsaVerifiedDate() {
         return smsaVerifiedDate;
     }
 
-    public void setSmsaVerifiedDate(LocalDateTime smsaVerifiedDate) {
+    public void setSmsaVerifiedDate(LocalDate smsaVerifiedDate) {
         this.smsaVerifiedDate = smsaVerifiedDate;
     }
 

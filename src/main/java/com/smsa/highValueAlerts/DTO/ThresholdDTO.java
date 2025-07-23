@@ -1,6 +1,6 @@
 package com.smsa.highValueAlerts.DTO;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class ThresholdDTO {
 
@@ -13,11 +13,11 @@ public class ThresholdDTO {
     private Long categoryBFromAmount;
     private Long categoryBToAmount;
     private String createdBy;
-    private LocalDateTime createdDate;
+    private LocalDate createdDate;
     private String modifiedBy;
-    private LocalDateTime modifiedDate;
+    private LocalDate modifiedDate;
     private String verifiedBy;
-    private LocalDateTime verifiedDate;
+    private LocalDate verifiedDate;
     private String action;
 
     // Getters and Setters
@@ -94,11 +94,11 @@ public class ThresholdDTO {
         this.createdBy = createdBy;
     }
 
-    public LocalDateTime getCreatedDate() {
+    public LocalDate getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDateTime createdDate) {
+    public void setCreatedDate(LocalDate createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -110,11 +110,11 @@ public class ThresholdDTO {
         this.modifiedBy = modifiedBy;
     }
 
-    public LocalDateTime getModifiedDate() {
+    public LocalDate getModifiedDate() {
         return modifiedDate;
     }
 
-    public void setModifiedDate(LocalDateTime modifiedDate) {
+    public void setModifiedDate(LocalDate modifiedDate) {
         this.modifiedDate = modifiedDate;
     }
 
@@ -126,11 +126,11 @@ public class ThresholdDTO {
         this.verifiedBy = verifiedBy;
     }
 
-    public LocalDateTime getVerifiedDate() {
+    public LocalDate getVerifiedDate() {
         return verifiedDate;
     }
 
-    public void setVerifiedDate(LocalDateTime verifiedDate) {
+    public void setVerifiedDate(LocalDate verifiedDate) {
         this.verifiedDate = verifiedDate;
     }
 
