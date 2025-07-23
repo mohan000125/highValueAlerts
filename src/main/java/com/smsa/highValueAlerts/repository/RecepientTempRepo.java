@@ -11,4 +11,6 @@ public interface RecepientTempRepo extends JpaRepository<SmsaRecepientTemp, Long
     // Custom query methods can be added here
 
     Optional<SmsaRecepientTemp> findBySmsaEmpId(String smsaEmpId);
+
+    void deleteBySmsaRamId(Long smsaRamId);
 }
