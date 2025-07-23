@@ -1,17 +1,23 @@
 package com.smsa.highValueAlerts.entity;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "RECEPIENT_MASTER")
-public class RecepientMaster {
+@Table(name = "SMSA_RECEPIENT_TEMP")
+public class SmsaRecepientTemp implements Serializable{
 
     @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "threshold_seq_gen")
+    @SequenceGenerator(name = "threshold_seq_gen", sequenceName = "SMSA_RAM_SEQ", allocationSize = 1)
     @Column(name = "SMSA_RAM_ID", nullable = false)
     private Long smsaRamId;
 
@@ -48,8 +54,8 @@ public class RecepientMaster {
     @Column(name = "SMSA_VERIFIED_DATE")
     private LocalDate smsaVerifiedDate;
 
-    @Column(name = "SMSA_STATUS", length = 10)
-    private String smsaStatus;
+    @Column(name = "SMSA_ACTION", length = 10)
+    private String smsaAction;
 
     // Getters and Setters
 
@@ -149,11 +155,11 @@ public class RecepientMaster {
         this.smsaVerifiedDate = smsaVerifiedDate;
     }
 
-    public String getSmsaStatus() {
-        return smsaStatus;
+    public String getSmsaAction() {
+        return smsaAction;
     }
 
-    public void setSmsaStatus(String smsaStatus) {
-        this.smsaStatus = smsaStatus;
+    public void setSmsaAction(String smsaAction) {
+        this.smsaAction = smsaAction;
     }
 }

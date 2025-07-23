@@ -1,23 +1,19 @@
 package com.smsa.highValueAlerts.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "THRESHOLD_TEMP")
-public class ThresholdTemp {
+@Table(name = "SMSA_THRESHOLD_MASTER")
+public class SmsaThresholdMaster implements Serializable{
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "threshold_temp_seq_gen")
-    @SequenceGenerator(name = "threshold_temp_seq_gen", sequenceName = "SMSA_THRESHOLD_TEMP_SEQ", allocationSize = 1)
     @Column(name = "SMSA_THRESHOLD_ID", nullable = false)
     private Long thresholdId;
 
@@ -60,8 +56,8 @@ public class ThresholdTemp {
     @Column(name = "SMSA_VERIFIED_DATE")
     private LocalDate verifiedDate;
 
-    @Column(name = "SMSA_ACTION", length = 10)
-    private String action;
+    @Column(name = "SMSA_STATUS", length = 10)
+    private String status;
 
     // Getters and Setters
 
@@ -177,11 +173,11 @@ public class ThresholdTemp {
         this.verifiedDate = verifiedDate;
     }
 
-    public String getAction() {
-        return action;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAction(String action) {
-        this.action = action;
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
