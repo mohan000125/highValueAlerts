@@ -8,7 +8,7 @@ public class SmsaHighValueAlertsController {
 
     @GetMapping("/")
     String getData(){
-        return "Hello world";
+        return "High Value Alerts Deployed Successfully";
     }
 
 
