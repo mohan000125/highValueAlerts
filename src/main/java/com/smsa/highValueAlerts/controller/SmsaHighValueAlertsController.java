@@ -1,7 +1,13 @@
 package com.smsa.highValueAlerts.controller;
 
+import com.smsa.highValueAlerts.DTO.RecepientDTO;
 import com.smsa.highValueAlerts.DTO.ReciepientRequestDto;
+import com.smsa.highValueAlerts.DTO.ThresholdDTO;
+import com.smsa.highValueAlerts.service.SmsaRecepientMasterService;
 import com.smsa.highValueAlerts.service.SmsaRecepientTempService;
+import com.smsa.highValueAlerts.service.SmsaThresholdMasterService;
+import com.smsa.highValueAlerts.service.SmsaThresholdTempService;
+import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +21,27 @@ public class SmsaHighValueAlertsController {
 
     @Autowired
     SmsaRecepientTempService smsaRecepientTempService;
+    
+    @Autowired
+    SmsaRecepientMasterService smsaRecepientMasterService;
+    
+    @Autowired
+    SmsaThresholdTempService smsaThresholdTempService;
+    
+    @Autowired
+    SmsaThresholdMasterService smsaThresholdMasterService;
 
     @PostMapping("/recipient/actions")
     public ResponseEntity<?> recipientData(@RequestBody ReciepientRequestDto reciepientRequestDto) {
         switch (reciepientRequestDto.getOperation().toUpperCase()) {
 
             case "ADD":
-                String msg = smsaRecepientTempService.addRecepientTempData(reciepientRequestDto.getRecepientDTO());
-                return ResponseEntity.ok(msg);
+                String addMsg = smsaRecepientTempService.addRecepientTempData(reciepientRequestDto.getRecepientDTO());
+                return ResponseEntity.ok(addMsg);
             case "UPDATE":
+                String updateMsg=smsaRecepientTempService.updateRecieptData(reciepientRequestDto.getRecepientDTO());
 
+                return ResponseEntity.ok(updateMsg);
             case "DELETE":
                 if (reciepientRequestDto.getRecepientDTO().getSmsaRamId() != null) {
                     smsaRecepientTempService.deleteRecepientByEmpId(reciepientRequestDto.getRecepientDTO().getSmsaRamId());
@@ -37,10 +54,37 @@ public class SmsaHighValueAlertsController {
         }
     }
 
-//    @PostMapping("/recipient/fetchData")
-//    public ResponseEntity<?> getRecipientTempData(@RequestBody Map<String, String> tokenMap) {
-//        
-//    }
+    @PostMapping("/recepient/fetchRecepientTempData")
+    public ResponseEntity<?> getRecepientTempData(@RequestBody Map<String, String> tokenMap) {
+        
+        List<RecepientDTO> recepientTempData= smsaRecepientTempService.getRecepientTempData();
+        
+        return ResponseEntity.ok(recepientTempData);
+    }
+    
+    @PostMapping("/recepient/fetchRecepientMasterData")
+    public ResponseEntity<?> getRecepientMasterData(@RequestBody Map<String, String> tokenMap) {
+        
+        List<RecepientDTO> recepientMasterData= smsaRecepientMasterService.getRecepientMasterData();
+        
+        return ResponseEntity.ok(recepientMasterData);
+    }
+    
+    @PostMapping("/threshold/fetchThresholdTempData")
+    public ResponseEntity<?> getThresholdTempData(@RequestBody Map<String, String> tokenMap) {
+        
+        List<ThresholdDTO> thresholdTempData= smsaThresholdTempService.getThresholdTempData();
+        
+        return ResponseEntity.ok(thresholdTempData);
+    }
+    
+    @PostMapping("/threshold/fetchThresholdMasterData")
+    public ResponseEntity<?> getThresholdMasterData(@RequestBody Map<String, String> tokenMap) {
+        
+        List<ThresholdDTO> thresholdMasterData= smsaThresholdMasterService.getThresholdMasterData();
+        
+        return ResponseEntity.ok(thresholdMasterData);
+    }
 
     @GetMapping("/")
     String getData() {
