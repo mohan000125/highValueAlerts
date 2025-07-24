@@ -11,6 +11,7 @@ import com.smsa.highValueAlerts.repository.RecepientTempRepo;
 import java.util.List;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SmsaRecepientTempService {
@@ -102,9 +103,32 @@ public class SmsaRecepientTempService {
         }
     }
 
-    public List<SmsaRecepientTemp> getRecepientData() {
-        List<SmsaRecepientTemp> s= recepientTempRepo.findAll();
-        return s;
+    
+    public List<RecepientDTO> getRecepientTempData() {
+        List<SmsaRecepientTemp> data = recepientTempRepo.findAll();
+        List<RecepientDTO> pojoList = data.stream()
+                .map(this::mapToPojo)
+                .collect(Collectors.toList());
+        return pojoList;
+    }
+
+    private RecepientDTO mapToPojo(SmsaRecepientTemp entity) {
+        RecepientDTO pojo = new RecepientDTO();
+        pojo.setSmsaRamId(entity.getSmsaRamId());
+        pojo.setSmsaEmpId(entity.getSmsaEmpId());
+        pojo.setSmsaGeoName(entity.getSmsaGeoName());
+        pojo.setSmsaSenderBic(entity.getSmsaSenderBic());
+        pojo.setSmsaMsgType(entity.getSmsaMsgType());
+        pojo.setSmsaEmpName(entity.getSmsaEmpName());
+        pojo.setSmsaGrade(entity.getSmsaGrade());
+        pojo.setSmsaCreatedBy(entity.getSmsaCreatedBy());
+        pojo.setSmsaModifiedBy(entity.getSmsaModifiedBy());
+        pojo.setSmsaModifiedDate(entity.getSmsaModifiedDate());
+        pojo.setSmsaVerifiedBy(entity.getSmsaVerifiedBy());
+        pojo.setSmsaVerifiedDate(entity.getSmsaVerifiedDate());
+        pojo.setSmsaAction(entity.getSmsaAction());
+
+        return pojo;
     }
 
     public SmsaRecepientTemp buildPojoToEntityCombo(RecepientDTO recepientDTO) {
