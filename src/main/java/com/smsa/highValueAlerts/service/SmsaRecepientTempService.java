@@ -15,57 +15,49 @@ public class SmsaRecepientTempService {
     @Autowired
     private RecepientTempRepo recepientTempRepo;
 
-    public String addAndUpdateRecepientTempData(RecepientDTO recepientDTO) {
+    public String addRecepientTempData(RecepientDTO recepientDTO) {
 
-        // Validate if ID is provided
-        String id = recepientDTO.getSmsaEmpId();
+    // Check uniqueness of the 4-column combination
+    boolean exists = recepientTempRepo.existsByUniqueCombo(
+        recepientDTO.getSmsaEmpId(),
+        recepientDTO.getSmsaGeoName(),
+        recepientDTO.getSmsaSenderBic(),
+        recepientDTO.getSmsaMsgType()
+    );
 
-        SmsaRecepientTemp smsaRecepientTemp = new SmsaRecepientTemp();
-
-        smsaRecepientTemp.setSmsaRamId(recepientDTO.getSmsaRamId());
-        smsaRecepientTemp.setSmsaEmpId(recepientDTO.getSmsaEmpId());
-        smsaRecepientTemp.setSmsaGeoName(recepientDTO.getSmsaGeoName());
-        smsaRecepientTemp.setSmsaSenderBic(recepientDTO.getSmsaSenderBic());
-        smsaRecepientTemp.setSmsaMsgType(recepientDTO.getSmsaMsgType());
-        smsaRecepientTemp.setSmsaEmpName(recepientDTO.getSmsaEmpName());
-        smsaRecepientTemp.setSmsaGrade(recepientDTO.getSmsaGrade());
-        smsaRecepientTemp.setSmsaCreatedBy(recepientDTO.getSmsaCreatedBy());
-        smsaRecepientTemp.setSmsaModifiedBy(recepientDTO.getSmsaModifiedBy());
-        smsaRecepientTemp.setSmsaModifiedDate(recepientDTO.getSmsaModifiedDate());
-        smsaRecepientTemp.setSmsaVerifiedBy(recepientDTO.getSmsaVerifiedBy());
-        smsaRecepientTemp.setSmsaVerifiedDate(recepientDTO.getSmsaVerifiedDate());
-        smsaRecepientTemp.setSmsaAction(recepientDTO.getSmsaAction());
-
-        if (id != null) {
-            Optional<SmsaRecepientTemp> data = recepientTempRepo.findBySmsaEmpId(id);
-
-            if (data.isPresent()) {
-                // If exists, update the existing record
-                SmsaRecepientTemp existing = data.get();
-
-                existing.setSmsaRamId(smsaRecepientTemp.getSmsaRamId());
-                existing.setSmsaEmpId(smsaRecepientTemp.getSmsaEmpId());
-                existing.setSmsaGeoName(smsaRecepientTemp.getSmsaGeoName());
-                existing.setSmsaSenderBic(smsaRecepientTemp.getSmsaSenderBic());
-                existing.setSmsaMsgType(smsaRecepientTemp.getSmsaMsgType());
-                existing.setSmsaEmpName(smsaRecepientTemp.getSmsaEmpName());
-                existing.setSmsaGrade(smsaRecepientTemp.getSmsaGrade());
-                existing.setSmsaCreatedBy(smsaRecepientTemp.getSmsaCreatedBy());
-                existing.setSmsaModifiedBy(smsaRecepientTemp.getSmsaModifiedBy());
-                existing.setSmsaModifiedDate(smsaRecepientTemp.getSmsaModifiedDate());
-                existing.setSmsaVerifiedBy(smsaRecepientTemp.getSmsaVerifiedBy());
-                existing.setSmsaVerifiedDate(smsaRecepientTemp.getSmsaVerifiedDate());
-                existing.setSmsaAction(smsaRecepientTemp.getSmsaAction());
-
-                recepientTempRepo.save(existing);
-                return "Recipient updated successfully";
-            }
-            // If ID is null or not found, insert new
-            recepientTempRepo.save(smsaRecepientTemp);
-            return "Recipient added successfully";
-        }
-        return "Please enter EMP ID";
+    if (exists) {
+    return String.format(
+        "Recipient already exists with EmpId = '%s', GeoName = '%s', SenderBIC = '%s', MsgType = '%s'.",
+        recepientDTO.getSmsaEmpId(),
+        recepientDTO.getSmsaGeoName(),
+        recepientDTO.getSmsaSenderBic(),
+        recepientDTO.getSmsaMsgType()
+    );
     }
+
+
+    // Proceed with insert
+    SmsaRecepientTemp smsaRecepientTemp = new SmsaRecepientTemp();
+
+    smsaRecepientTemp.setSmsaRamId(recepientDTO.getSmsaRamId());
+    smsaRecepientTemp.setSmsaEmpId(recepientDTO.getSmsaEmpId());
+    smsaRecepientTemp.setSmsaGeoName(recepientDTO.getSmsaGeoName());
+    smsaRecepientTemp.setSmsaSenderBic(recepientDTO.getSmsaSenderBic());
+    smsaRecepientTemp.setSmsaMsgType(recepientDTO.getSmsaMsgType());
+    smsaRecepientTemp.setSmsaEmpName(recepientDTO.getSmsaEmpName());
+    smsaRecepientTemp.setSmsaGrade(recepientDTO.getSmsaGrade());
+    smsaRecepientTemp.setSmsaCreatedBy(recepientDTO.getSmsaCreatedBy());
+    smsaRecepientTemp.setSmsaModifiedBy(recepientDTO.getSmsaModifiedBy());
+    smsaRecepientTemp.setSmsaModifiedDate(recepientDTO.getSmsaModifiedDate());
+    smsaRecepientTemp.setSmsaVerifiedBy(recepientDTO.getSmsaVerifiedBy());
+    smsaRecepientTemp.setSmsaVerifiedDate(recepientDTO.getSmsaVerifiedDate());
+    smsaRecepientTemp.setSmsaAction(recepientDTO.getSmsaAction());
+
+    recepientTempRepo.save(smsaRecepientTemp);
+
+    return "Recipient added successfully";
+}
+
 
     public String deleteRecepientByEmpId(Long smsaRamId) {
         if (smsaRamId == null) {

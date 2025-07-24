@@ -21,7 +21,7 @@ public class SmsaHighValueAlertsController {
 
             case "ADD":
             case "UPDATE":
-                smsaRecepientTempService.addAndUpdateRecepientTempData(reciepientRequestDto.getRecepientDTO());
+                smsaRecepientTempService.addRecepientTempData(reciepientRequestDto.getRecepientDTO());
                 return ResponseEntity.ok("Data saved and Went for Approval");
 
             case "DELETE":
