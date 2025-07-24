@@ -11,6 +11,7 @@ import com.smsa.highValueAlerts.entity.SmsaThresholdMaster;
 import com.smsa.highValueAlerts.entity.SmsaThresholdTemp;
 import com.smsa.highValueAlerts.repository.ThresholdMasterRepo;
 import com.smsa.highValueAlerts.repository.ThresholdTempRepo;
+import java.util.stream.Collectors;
 
 @Service
 public class SmsaThresholdTempService {
@@ -28,7 +29,6 @@ public class SmsaThresholdTempService {
                 thresholdDTO.getMsgCurrency(),
                 thresholdDTO.getSenderBic(),
                 thresholdDTO.getMsgType()
-
         );
 
         if (existsInMs) {
@@ -44,8 +44,7 @@ public class SmsaThresholdTempService {
                 thresholdDTO.getMsgType());
 
         if (existsTemp) {
-            return 
-            String.format(
+            return String.format(
                     "Threshold data already waiting for approval with Currency = '%s', SenderBIC = '%s', MsgType = '%s'.",
                     thresholdDTO.getMsgCurrency(),
                     thresholdDTO.getSenderBic(),
@@ -80,7 +79,6 @@ public class SmsaThresholdTempService {
         return "Id not found to update";
     }
 
-
     public String deleteThresholdByEmpId(Long smsaThresholdID) {
         if (smsaThresholdID == null) {
             return "smsaThreshold must not be null";
@@ -95,12 +93,31 @@ public class SmsaThresholdTempService {
         }
     }
 
-    public List<SmsaThresholdTemp> getRecepientData() {
-        List<SmsaThresholdTemp> s= thresholdTempRepo.findAll();
-        return s;
+    public List<ThresholdDTO> getThresholdTempData() {
+        List<SmsaThresholdTemp> data = thresholdTempRepo.findAll();
+        List<ThresholdDTO> pojoList = data.stream()
+                .map(this::mapToPojo)
+                .collect(Collectors.toList());
+        return pojoList;
     }
 
+    private ThresholdDTO mapToPojo(SmsaThresholdTemp entity) {
+        ThresholdDTO pojo = new ThresholdDTO();
+        pojo.setThresholdId(entity.getThresholdId());
+        pojo.setMsgCurrency(entity.getMsgCurrency());
+        pojo.setSenderBic(entity.getSenderBic());
+        pojo.setMsgType(entity.getMsgType());
+        pojo.setCategoryAToAmount(entity.getCategoryAToAmount());
+        pojo.setCategoryAFromAmount(entity.getCategoryAFromAmount());
+        pojo.setCategoryBFromAmount(entity.getCategoryAFromAmount());
+        pojo.setCategoryBToAmount(entity.getCategoryBToAmount());
+        pojo.setCreatedBy(entity.getCreatedBy());
+        pojo.setCreatedDate(entity.getCreatedDate());
+        pojo.setVerifiedBy(entity.getVerifiedBy());
+        pojo.setVerifiedDate(entity.getVerifiedDate());
 
+        return pojo;
+    }
 
     public SmsaThresholdTemp buildPojoToEntityCombo(ThresholdDTO thresholdDTO) {
         SmsaThresholdTemp smsaThresholdTemp = new SmsaThresholdTemp();
