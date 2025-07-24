@@ -198,7 +198,7 @@ public class SmsaThresholdMasterService {
         return root.get(fieldName).in(list);
     }
 
-    public List<ThresholdDTO> getThrsholdMasterData() {
+    public List<ThresholdDTO> getThresholdMasterData() {
         List<SmsaThresholdMaster> data = thresholdMasterRepo.findAll();
         List<ThresholdDTO> pojoList = data.stream()
                 .map(this::mapToPojo)

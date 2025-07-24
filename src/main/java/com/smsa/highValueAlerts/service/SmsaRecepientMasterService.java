@@ -6,7 +6,11 @@ package com.smsa.highValueAlerts.service;
 
 import com.smsa.highValueAlerts.DTO.RecepientDTO;
 import com.smsa.highValueAlerts.DTO.RecepientFilterPojo;
+import com.smsa.highValueAlerts.DTO.ThresholdDTO;
 import com.smsa.highValueAlerts.entity.SmsaRecepientMaster;
+import com.smsa.highValueAlerts.entity.SmsaThresholdMaster;
+import com.smsa.highValueAlerts.repository.RecepientMasterRepo;
+
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
@@ -26,6 +30,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -38,6 +43,10 @@ public class SmsaRecepientMasterService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private RecepientMasterRepo recepientMasterRepo;
+
     private static final Logger logger = LogManager.getLogger(SmsaRecepientMasterService.class);
 
     public Page<RecepientDTO> getFilteredMessages(RecepientFilterPojo filter, Pageable pageable) {
@@ -59,21 +68,21 @@ public class SmsaRecepientMasterService {
             }
             List<Order> orderOfSorting = new ArrayList<>();
 
-//            if (!filter.getColumnSort().contains("fileDate")) {
-//                filter.getColumnSort().add("fileDate");
-//            }
-//
-//            if (filter.getColumnSort() != null && !filter.getColumnSort().isEmpty()) {
-//                logger.info("Sortimg by columns: " + "fileDate");
-//                for (String column : filter.getColumnSort()) {
-//                    logger.info("," + column);
-//                    if (filter.getSortType().equals("DESC")) {
-//                        orderOfSorting.add(cb.desc(root.get(column)));
-//                    } else {
-//                        orderOfSorting.add(cb.asc(root.get(column)));
-//                    }
-//                }
-//            }
+            // if (!filter.getColumnSort().contains("fileDate")) {
+            // filter.getColumnSort().add("fileDate");
+            // }
+            //
+            // if (filter.getColumnSort() != null && !filter.getColumnSort().isEmpty()) {
+            // logger.info("Sortimg by columns: " + "fileDate");
+            // for (String column : filter.getColumnSort()) {
+            // logger.info("," + column);
+            // if (filter.getSortType().equals("DESC")) {
+            // orderOfSorting.add(cb.desc(root.get(column)));
+            // } else {
+            // orderOfSorting.add(cb.asc(root.get(column)));
+            // }
+            // }
+            // }
             query.orderBy(orderOfSorting);
 
             TypedQuery<SmsaRecepientMaster> typedQuery = entityManager.createQuery(query);
@@ -103,7 +112,8 @@ public class SmsaRecepientMasterService {
         return new PageImpl<>(pojoList, pageable, totalCount);
     }
 
-    private List<Predicate> buildDynamicPredicates(RecepientFilterPojo filter, CriteriaBuilder cb, Root<SmsaRecepientMaster> root) {
+    private List<Predicate> buildDynamicPredicates(RecepientFilterPojo filter, CriteriaBuilder cb,
+            Root<SmsaRecepientMaster> root) {
         List<Predicate> predicates = new ArrayList<>();
 
         try {
@@ -111,7 +121,8 @@ public class SmsaRecepientMasterService {
                 String fieldName = pd.getName();
                 Object value;
 
-                if (!"class".equals(fieldName) && !"sortType".equals(fieldName) && !"columnSort".equals(fieldName) && !"generalSearch".equals(fieldName)) {
+                if (!"class".equals(fieldName) && !"sortType".equals(fieldName) && !"columnSort".equals(fieldName)
+                        && !"generalSearch".equals(fieldName)) {
                     value = pd.getReadMethod().invoke(filter);
                     if (value != null) {
                         if (value instanceof List) {
@@ -146,7 +157,8 @@ public class SmsaRecepientMasterService {
         return predicates;
     }
 
-    private Predicate buildPredicateForField(String fieldName, Object value, CriteriaBuilder cb, Root<SmsaRecepientMaster> root) {
+    private Predicate buildPredicateForField(String fieldName, Object value, CriteriaBuilder cb,
+            Root<SmsaRecepientMaster> root) {
         if (fieldName.endsWith("From") && value instanceof Comparable) {
             return cb.greaterThanOrEqualTo(root.get("fileDate"), (Comparable) value);
         }
@@ -170,7 +182,8 @@ public class SmsaRecepientMasterService {
         return cb.equal(root.get(fieldName), value);
     }
 
-    private Predicate handleListPredicate(String fieldName, List<?> list, CriteriaBuilder cb, Root<SmsaRecepientMaster> root) {
+    private Predicate handleListPredicate(String fieldName, List<?> list, CriteriaBuilder cb,
+            Root<SmsaRecepientMaster> root) {
         if (list.isEmpty()) {
             return null;
         }
@@ -183,14 +196,21 @@ public class SmsaRecepientMasterService {
                     // Convert column to string using TO_CHAR
                     Expression<String> fieldAsString = cb.function("TO_CHAR", String.class, root.get(fieldName));
                     likePredicates.add(
-                            cb.like(cb.lower(fieldAsString), "%" + escapeLike(item.toString().toLowerCase()) + "%")
-                    );
+                            cb.like(cb.lower(fieldAsString), "%" + escapeLike(item.toString().toLowerCase()) + "%"));
                 }
             }
             return cb.or(likePredicates.toArray(new Predicate[0]));
         }
 
         return root.get(fieldName).in(list);
+    }
+
+    public List<RecepientDTO> getRecepientMasterData() {
+        List<SmsaRecepientMaster> data = recepientMasterRepo.findAll();
+        List<RecepientDTO> pojoList = data.stream()
+                .map(this::mapToPojo)
+                .collect(Collectors.toList());
+        return pojoList;
     }
 
     private RecepientDTO mapToPojo(SmsaRecepientMaster entity) {
