@@ -6,9 +6,7 @@ package com.smsa.highValueAlerts.service;
 
 import com.smsa.highValueAlerts.DTO.RecepientDTO;
 import com.smsa.highValueAlerts.DTO.RecepientFilterPojo;
-import com.smsa.highValueAlerts.DTO.ThresholdDTO;
 import com.smsa.highValueAlerts.entity.SmsaRecepientMaster;
-import com.smsa.highValueAlerts.entity.SmsaThresholdMaster;
 import com.smsa.highValueAlerts.repository.RecepientMasterRepo;
 
 import java.beans.IntrospectionException;
