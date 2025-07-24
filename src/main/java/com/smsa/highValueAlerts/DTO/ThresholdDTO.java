@@ -1,5 +1,6 @@
 package com.smsa.highValueAlerts.DTO;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class ThresholdDTO {
@@ -8,10 +9,10 @@ public class ThresholdDTO {
     private String msgCurrency;
     private String senderBic;
     private String msgType;
-    private Long categoryAFromAmount;
-    private Long categoryAToAmount;
-    private Long categoryBFromAmount;
-    private Long categoryBToAmount;
+    private BigDecimal categoryAFromAmount;
+    private BigDecimal categoryAToAmount;
+    private BigDecimal categoryBFromAmount;
+    private BigDecimal categoryBToAmount;
     private String createdBy;
     private LocalDate createdDate;
     private String modifiedBy;
@@ -54,35 +55,35 @@ public class ThresholdDTO {
         this.msgType = msgType;
     }
 
-    public Long getCategoryAFromAmount() {
+    public BigDecimal getCategoryAFromAmount() {
         return categoryAFromAmount;
     }
 
-    public void setCategoryAFromAmount(Long categoryAFromAmount) {
+    public void setCategoryAFromAmount(BigDecimal categoryAFromAmount) {
         this.categoryAFromAmount = categoryAFromAmount;
     }
 
-    public Long getCategoryAToAmount() {
+    public BigDecimal getCategoryAToAmount() {
         return categoryAToAmount;
     }
 
-    public void setCategoryAToAmount(Long categoryAToAmount) {
+    public void setCategoryAToAmount(BigDecimal categoryAToAmount) {
         this.categoryAToAmount = categoryAToAmount;
     }
 
-    public Long getCategoryBFromAmount() {
+    public BigDecimal getCategoryBFromAmount() {
         return categoryBFromAmount;
     }
 
-    public void setCategoryBFromAmount(Long categoryBFromAmount) {
+    public void setCategoryBFromAmount(BigDecimal categoryBFromAmount) {
         this.categoryBFromAmount = categoryBFromAmount;
     }
 
-    public Long getCategoryBToAmount() {
+    public BigDecimal getCategoryBToAmount() {
         return categoryBToAmount;
     }
 
-    public void setCategoryBToAmount(Long categoryBToAmount) {
+    public void setCategoryBToAmount(BigDecimal categoryBToAmount) {
         this.categoryBToAmount = categoryBToAmount;
     }
 

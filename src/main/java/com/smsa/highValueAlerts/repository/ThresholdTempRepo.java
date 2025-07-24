@@ -7,4 +7,13 @@ import com.smsa.highValueAlerts.entity.SmsaThresholdTemp;
 
 @Repository
 public interface ThresholdTempRepo extends JpaRepository<SmsaThresholdTemp, Long> {
+     boolean existsByUniqueCombo(
+       
+        String msgCurrency,
+        String senderBic,
+        String msgType
+    );
+
+    void deleteBySmsaThresholdId(Long smsaThresholdID);
+
 }
