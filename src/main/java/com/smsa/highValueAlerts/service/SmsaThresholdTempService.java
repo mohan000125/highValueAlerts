@@ -113,8 +113,11 @@ public class SmsaThresholdTempService {
         pojo.setCategoryBToAmount(entity.getCategoryBToAmount());
         pojo.setCreatedBy(entity.getCreatedBy());
         pojo.setCreatedDate(entity.getCreatedDate());
+        pojo.setModifiedBy(entity.getModifiedBy());
+        pojo.setModifiedDate(entity.getModifiedDate());
         pojo.setVerifiedBy(entity.getVerifiedBy());
         pojo.setVerifiedDate(entity.getVerifiedDate());
+        pojo.setAction(entity.getAction());
 
         return pojo;
     }
