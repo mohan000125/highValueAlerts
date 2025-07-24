@@ -2,6 +2,7 @@ package com.smsa.highValueAlerts.controller;
 
 import com.smsa.highValueAlerts.DTO.ReciepientRequestDto;
 import com.smsa.highValueAlerts.service.SmsaRecepientTempService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +21,9 @@ public class SmsaHighValueAlertsController {
         switch (reciepientRequestDto.getOperation().toUpperCase()) {
 
             case "ADD":
+                String msg = smsaRecepientTempService.addRecepientTempData(reciepientRequestDto.getRecepientDTO());
+                return ResponseEntity.ok(msg);
             case "UPDATE":
-                smsaRecepientTempService.addRecepientTempData(reciepientRequestDto.getRecepientDTO());
-                return ResponseEntity.ok("Data saved and Went for Approval");
 
             case "DELETE":
                 if (reciepientRequestDto.getRecepientDTO().getSmsaRamId() != null) {
@@ -35,6 +36,11 @@ public class SmsaHighValueAlertsController {
 
         }
     }
+
+//    @PostMapping("/recipient/fetchData")
+//    public ResponseEntity<?> getRecipientTempData(@RequestBody Map<String, String> tokenMap) {
+//        
+//    }
 
     @GetMapping("/")
     String getData() {
